@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Button } from 'react-native';
 import uuid from 'react-uuid';
 import GoalItem from './components/goalItem';
 import InputComponent from './components/InputComponent';
@@ -12,7 +12,7 @@ export default function App() {
     text: ''
   })
   const [CourseGoals, setCourseGoals] = useState([])
-
+  const [ModalVisible, setModalVisible] = useState(false)
   const goalInputHandler = (enteredText) => {
     setEnteredGoal({
       key: '',
@@ -38,12 +38,23 @@ export default function App() {
     })
   }
 
+  const openModal = () => {
+    setModalVisible(true)
+  }
+
+  const closeModal = () => {
+    setModalVisible(false)
+  }
+
   return (
     <View style={styles.container}>
+      <Button onPress={openModal} title="새로운 목표" />
       <InputComponent 
         EnteredGoal={EnteredGoal}
         goalInputHandler={goalInputHandler}
         addGoalHandler={addGoalHandler}
+        ModalVisible={ModalVisible}
+        closeModal={closeModal}
       />
       <FlatList data={CourseGoals} renderItem={(data) => <GoalItem deleteElement={deleteElement.bind(this, data.item.key)} text={data.item.text} />} />
       {/* ScrollView는 한번에 렌더를 처리하므로 데이터 처리속도가 스크롤 속도를 따라가지
