@@ -28,6 +28,16 @@ export default function App() {
     setCourseGoals(currentGoals => [...currentGoals, enteredGoalWithKey])
   }
 
+  const deleteElement = (goalKey) => {
+    setCourseGoals(currentGoals => {
+      return currentGoals.filter(goal => {
+        return goalKey !== goal.key
+        // return false => 해당요소를 제거하고 새로운 배열
+        // 존재하는 Key값과 눌려진 Key값이 서로 일치하면 false 다르면 true
+      })
+    })
+  }
+
   return (
     <View style={styles.container}>
       <InputComponent 
@@ -35,7 +45,7 @@ export default function App() {
         goalInputHandler={goalInputHandler}
         addGoalHandler={addGoalHandler}
       />
-      <FlatList data={CourseGoals} renderItem={(data) => <GoalItem text={data.item.text} />} />
+      <FlatList data={CourseGoals} renderItem={(data) => <GoalItem deleteElement={deleteElement.bind(this, data.item.key)} text={data.item.text} />} />
       {/* ScrollView는 한번에 렌더를 처리하므로 데이터 처리속도가 스크롤 속도를 따라가지
           못하는 경우가 있음. 즉 적은 양의 데이터를 출력할때는 용이하지만 데이터 양이 많을 때에는
           화면에 보여주는 부분만 렌더링하는 FlatList을 사용한다.
