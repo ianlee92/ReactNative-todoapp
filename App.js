@@ -1,18 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, TextInput, View, Button } from 'react-native';
 
 export default function App() {
-
-  const [OutputText, setOutputText] = useState("Hi there! 👀")
-  function buttonTapped(){
-    setOutputText("🎉 Welcome to React Native World!")
-  }
-
   return (
     <View style={styles.container}>
-      <Text>{OutputText}</Text>
-      <Button title="Click" onPress={buttonTapped} />
+      <View>
+        <TextInput style={styles.textInput} placeholder="Course Goal!" />
+        <Button title="ADD" />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -21,8 +17,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 50
   },
+  textInput: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1
+  }
 });
