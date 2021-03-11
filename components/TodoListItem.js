@@ -3,20 +3,25 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const TodoListItem = ({textValue, id, checked, onRemove}) => {
+const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity>
-                <View style={styles.completeCircle}>
-                    <Icon name="circledowno" size={30} color="#3143e8" />
-                </View>
+            <TouchableOpacity onPress={onToggle(id)}>
+                {checked ? (
+                    <View style={styles.completeCircle}>
+                        <Icon name="circledowno" size={30} color="#fa8231" />
+                    </View>
+                ) : (
+                    <View style={styles.circle} />
+                )}
             </TouchableOpacity>
-            <Text style={[styles.text, styles.strikeText]}>
+            <Text style={[styles.text, 
+                checked? styles.strikeText : styles.unstrikeText,]}>
                 {textValue}
             </Text>
             <TouchableOpacity style={styles.buttonContainer}>
                 <Text style={styles.buttonText} onPress={onRemove(id)}>
-                    <Icon name="delete" size={30} color="#e33057" />
+                    <Icon name="delete" size={30} color="#eb3b5a" />
                 </Text>
             </TouchableOpacity>
         </View>
@@ -43,7 +48,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 15,
-        borderColor: 'blue',
+        borderColor: '#fa8231',
         borderWidth: 2,
         marginRight: 20,
         marginLeft: 20,

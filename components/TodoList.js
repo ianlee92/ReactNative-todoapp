@@ -3,11 +3,16 @@ import React from 'react'
 import { StyleSheet, ScrollView, Text } from 'react-native'
 import TodoListItem from './TodoListItem'
 
-const TodoList = ({Todos, onRemove}) => {
+const TodoList = ({Todos, onRemove, onToggle}) => {
     return (
         <ScrollView contentContainerStyle={styles.listContainer}>
             {Todos.map(Todo => (
-                <TodoListItem key={Todo.id} {...Todo} onRemove={onRemove} />
+                <TodoListItem 
+                    key={Todo.id} 
+                    {...Todo} 
+                    onRemove={onRemove} 
+                    onToggle={onToggle}
+                />
             ))}
         </ScrollView>
     );

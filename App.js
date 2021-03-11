@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, ScrollView, StyleSheet, View, Dimensions, Platform } from 'react-native';
 import AppLoading from 'expo-app-loading';
-import uuid from 'react-uuid';
+import uuid from 'react-uuid'; // uuid 적용하기 !!!
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
@@ -21,13 +21,21 @@ const App = () => {
     setTodos(Todos.filter(Todo => Todo.id !== id));
   };
 
+  const onToggle = id => e => {
+    setTodos(
+      Todos.map(Todo =>
+        Todo.id === id ? {...Todo, checked: !Todo.checked} : Todo,
+      ),
+    );
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text style={styles.title}>오늘의 목표 😎</Text>
       <View style={styles.card}>
         <TodoInsert onAddTodo={addTodo} />
-        <TodoList Todos={Todos} onRemove={onRemove} />
+        <TodoList Todos={Todos} onRemove={onRemove} onToggle={onToggle} />
       </View>
     </View>
   );
