@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TouchableOpacity, StyleSheet, Dimensions} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput} from 'react-native'
 
 const { width, height } = Dimensions.get("window");
 
@@ -14,9 +14,17 @@ const ToDo = (props) => {
                     props.Completed ? styles.completedCheck : styles.uncompletedCheck}
                     >✓</Text></View>
             </TouchableOpacity>
-            <Text style={[styles.text,
-            props.Completed ? styles.completedText : styles.uncompletedText]}>{props.Goal}</Text>
+            {props.Edited ? (<TextInput 
+                            style={[styles.text, styles.input, props.Completed ? styles.completedText : styles.uncompletedText]}
+                            value={props.Goal} 
+                            multiline={true}
+                            onChangeText={props.setDoValue}
+                            returnKeyType={"done"}
+                            onBlur={props.finishEditing}
+                        />) : (<Text style={[styles.text,
+            props.Completed ? styles.completedText : styles.uncompletedText]}>{props.Goal}</Text>)}
         </View>
+
         {props.Edited ? (<View style={styles.actions}>
             <TouchableOpacity onPressOut={props.finishEditing}>
                 <View style={styles.actionContainer}>
@@ -98,6 +106,11 @@ const styles = StyleSheet.create({
     actionContainer: {
         marginVertical: 10,
         marginHorizontal: 10
+    },
+    input: {
+        marginVertical:15,
+        width: width / 2,
+        paddingBottom: 5
     }
 });
 
