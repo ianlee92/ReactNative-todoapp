@@ -1,81 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, ScrollView, StyleSheet, View, Dimensions, Platform } from 'react-native';
-import ToDo from './ToDo';
 import AppLoading from 'expo-app-loading';
+import uuid from 'react-uuid';
+import TodoInsert from './components/TodoInsert';
+import TodoList from './components/TodoList';
 
 const { height, width } = Dimensions.get("window");
 
-export default function App() {
+const App = () => {
+  const [Todos, setTodos] = useState([]);
 
-  const [NewToDo, setNewToDo] = useState("")
-  const [Completed, setCompleted] = useState(false)
-  const [Edited, setEdited] = useState(false)
-  const [Goal, setGoal] = useState("")
-  const [DoValue, setDoValue] = useState("")
-  const [LoadedToDo, setLoadedToDo] = useState(false)
+  const addTodo = text => {
+    setTodos([...Todos,
+        {id: Math.random().toString(), textValue: text, checked: false}, // check true면 완료
+    ]);
+  };
 
-  const toggleComplete = () => {
-    setCompleted(!Completed)
-  }
+  const onRemove = id => e => {
+    setTodos(Todos.filter(Todo => Todo.id !== id));
+  };
 
-  const startEditing = () => {
-    setEdited(true),
-    setDoValue(Goal)
-  }
-
-  const finishEditing = () => {
-    setEdited(false)
-  }
-
-  const controllNewToDo = () => {
-    setNewToDo(Goal)
-  }
-
-  const loadToDo = () => {
-    setLoadedToDo(true)
-  }
-
-  useEffect(() => {
-    loadToDo()
-  }, [])
-
-  const addToDo = () => {
-    if(newToDo !== ""){
-      setNewToDo("")
-    }
-  }
-
-
-  if(!LoadedToDo) {
-    return <AppLoading />;
-  }
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text style={styles.title}>오늘의 목표 😎</Text>
       <View style={styles.card}>
-        <TextInput 
-          style={styles.input} 
-          placeholder={"You can do it!"} 
-          value={NewToDo} 
-          onChangeText={controllNewToDo} 
-          placeholderTextColor={"#999"}
-          returnKeyType={"done"}
-          autoCorrect={false}
-          onSubmitEditing={addToDo}
-        />
-        <ScrollView contentContainerStyle={styles.toDos}>
-          <ToDo 
-          finishEditing={finishEditing} 
-          Completed={Completed} 
-          Edited={Edited}
-          DoValue={DoValue}
-          Goal={"아무것도 안하기"}
-          startEditing={startEditing} 
-          toggleComplete={toggleComplete}
-          setDoValue={setDoValue}/>
-        </ScrollView>
+        <TodoInsert onAddTodo={addTodo} />
+        <TodoList Todos={Todos} onRemove={onRemove} />
       </View>
     </View>
   );
@@ -93,7 +45,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginTop: 50,
     fontWeight: "400",
-    marginBottom: 30
+    marginBottom: 30,
+    textAlign: "center",
+
   },
   card: {
     backgroundColor: "white",
@@ -126,3 +80,5 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+export default App;
