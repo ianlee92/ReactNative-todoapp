@@ -1,7 +1,9 @@
 // 추가된 아이템 하나를 나타내는 부분, 완료 여부 상태값, 체크 이벤트
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+
+const { width, height } = Dimensions.get("window");
 
 const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
     return (
@@ -9,7 +11,7 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
             <TouchableOpacity onPress={onToggle(id)}>
                 {checked ? (
                     <View style={styles.completeCircle}>
-                        <Icon name="circledowno" size={30} color="#fa8231" />
+                        <Icon name="circledowno" size={30} color="#3867d6" />
                     </View>
                 ) : (
                     <View style={styles.circle} />
@@ -20,8 +22,8 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
                 {textValue}
             </Text>
             <TouchableOpacity style={styles.buttonContainer}>
-                <Text style={styles.buttonText} onPress={onRemove(id)}>
-                    <Icon name="delete" size={30} color="#eb3b5a" />
+                <Text onPress={onRemove(id)}>
+                ❌
                 </Text>
             </TouchableOpacity>
         </View>
@@ -30,6 +32,7 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
 
 const styles = StyleSheet.create({
     container: {
+        width: width - 70,
         flex: 1,
         borderBottomColor: '#bbb',
         borderBottomWidth: StyleSheet.hairlineWidth,
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 15,
-        borderColor: '#fa8231',
+        borderColor: '#3867d6',
         borderWidth: 2,
         marginRight: 20,
         marginLeft: 20,

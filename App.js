@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { Text, TextInput, ScrollView, StyleSheet, View, Dimensions, Platform } from 'react-native';
-import AppLoading from 'expo-app-loading';
-import uuid from 'react-uuid'; // uuid 적용하기 !!!
+import React, { useState } from 'react';
+import { Text, StyleSheet, View, Dimensions, Platform } from 'react-native';
+import uuid from 'react-uuid';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
@@ -13,7 +12,7 @@ const App = () => {
 
   const addTodo = text => {
     setTodos([...Todos,
-        {id: Math.random().toString(), textValue: text, checked: false}, // check true면 완료
+      {id: uuid(), textValue: text, checked: false}, // check true면 완료
     ]);
   };
 
@@ -44,7 +43,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f7b731",
+    backgroundColor: "#4b7bec",
     padding: 50,
     alignItems: "center"
   },
@@ -55,7 +54,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     marginBottom: 30,
     textAlign: "center",
-
   },
   card: {
     backgroundColor: "white",
@@ -76,17 +74,8 @@ const styles = StyleSheet.create({
       android: {
         elevation: 3
       }
-    })
+    }),
   },
-  input: {
-    padding: 20,
-    borderBottomColor: "#bbb",
-    borderBottomWidth: 1,
-    fontSize: 25
-  },
-  toDos: {
-    alignItems: "center"
-  }
 });
 
 export default App;

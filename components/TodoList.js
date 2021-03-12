@@ -1,6 +1,6 @@
 // 추가된 아이템을 스크롤 뷰를 통해 보여주는 부분
 import React from 'react'
-import { StyleSheet, ScrollView, Text } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import TodoListItem from './TodoListItem'
 
 const TodoList = ({Todos, onRemove, onToggle}) => {

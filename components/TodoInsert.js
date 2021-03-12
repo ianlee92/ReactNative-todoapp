@@ -16,7 +16,7 @@ const TodoInsert = ({onAddTodo}) => {
         <View style={styles.inputContainer}>
             <TextInput 
                 style={styles.input}
-                placeholder="You can do it!"
+                placeholder="✏️ 여기에 입력해주세요."
                 placeholderTextColor={'#999'}
                 onChangeText={todoInputHandler}
                 value={NewTodoItem}
